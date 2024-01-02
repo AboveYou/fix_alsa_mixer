@@ -1,0 +1,12 @@
+# ---------------------
+# action file to define rules for the post-transaction-actions plugin
+# ---------------------
+see: https://dnf-plugins-core.readthedocs.io/en/latest/post-transaction-actions.html
+
+
+# I am sure the scope could be narrowed down to the specific package but this is additional work I avoid :D
+
+# matches all pulseaudio upgrades/installs
+pulseaudio*:in:./etc/dnf/plugins/post-transaction-actions.d/fix_alsa_mixer.sh.x
+# matches all pulseaudio upgrades/installs
+alsa*:in:./etc/dnf/plugins/post-transaction-actions.d/fix_alsa_mixer.sh.x

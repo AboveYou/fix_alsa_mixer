@@ -21,13 +21,29 @@ To run the script automated "without" root privileges you can set the SUID bit o
 ```bash
 # adapt this to your package manager
 sudo dnf install shc
+# compile the script
 shc -Sf fix_alsa_mixer.sh
 ```
 
 Finally, change the owner and add the SUID bit to the executable.
 ```bash
+# change owner
 sudo chown root:root fix_alsa_mixer.sh.x
+# set SUID bit
 sudo chmod 4701 fix_alsa_mixer.sh.x
 ```
 
 You can now run the binary as your normal user! 
+
+If you use the `dnf` as your package manager you can use the `post-transaction-actions` plugin to run the binary after every update.
+
+```bash
+# install the plugin
+sudo dnf install python3-dnf-plugin-post-transaction-actions
+# copy the binary
+sudo cp fix_alsa_mixer.sh.x /etc/dnf/plugins/post-transaction-actions.d/
+# copy the action script
+sudo cp fix_alsa_mixer.action /etc/dnf/plugins/post-transaction-actions.d/
+```
+
+The script will now be executed automatically after every `pulseaudio` or `alsa` package upgrade.
